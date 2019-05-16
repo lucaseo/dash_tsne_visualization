@@ -1,3 +1,5 @@
+Click Here !! [DEMO](http://soundlabc.herokuapp.com)
+
 ### To get started ... 
 Choose a dataset you want to visualize. You can either choose the MNIST images 
 (3000 image samples) or facial images for 8 female K-pop artists(100 samples per each).The Scatter plot 

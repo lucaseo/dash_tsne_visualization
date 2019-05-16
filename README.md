@@ -1,96 +1,52 @@
-# t-SNE Explorer
-
-This is a demo of the Dash interactive Python framework developed by [Plotly](https://plot.ly/).
-
-Dash abstracts away all of the technologies and protocols required to build an interactive web-based application and is a simple and effective way to bind a user interface around your Python code. To learn more check out our [documentation](https://plot.ly/dash). 
-
-For an introductory and extensive explanation of t-SNE how to use it properly, please check out the [demo app](https://dash-tsne.plot.ly/).
-
-![animated1](screenshots/animated1.gif)
+### To get started ... 
+Choose a dataset you want to visualize. You can either choose the MNIST images 
+(3000 image samples) or facial images for 8 female K-pop artists(100 samples per each).The Scatter plot 
+above is the result of running the t-SNE algorithm, on image data resulting in 
+a 3D visualization of the embedded features. For demo purposes, all the data 
+were pre-generated using limited number of input parameters, and displayed 
+instantly. The sections below will go over how the t-SNE Explorer works.
 
 
-## Getting Started
-### Using the demo
-To get started, choose a dataset you want to visualize. When the scatter plot appears on the graph, you can see the original image by clicking on a data point. 
+### Abstract
+The goal of this project is to practice and implement dimensional reduction on image data with high dimensional features.
 
-Alternatively, you can explore the GloVe Word Vectors datasets, which are encoded vectors of large collection of texts from Wikipedia, Twitter, and acquired through Web Crawlers. Upon clicking a data point, you will be able to see the 5 closest neighbors of the word you clicked.
+The features are extracted through VGG, which is a CNN architecture. Among various dimensional reduction techniques, 
+Principle Component Analysis(PCA) is known for its statistical approaches to identify principle components within data points through orthogonal transformation. 
+In order to visualize the features of each datapoints, t-SNE is implemented for its ability to preserve local structure and high interpretability in visual product.
+Plotly, a python graphing library with interactive output, and Dash, a python framework for web application are implemented to host this mini project.
+ 
 
-### Running the app locally
+### How does t-SNE work?
+Images can be seen as long vectors of hundred or thousands of dimensions, 
+each dimension representing one shade of color, or of gray (if the image 
+is black & white). For example, a 28x28 image (such as MNIST) can be unrolled 
+into one 784-dimensional vector. Kept this way, it would be extremely hard to 
+visualize our dataset, especially if it contains tens of thousands of samples; 
+in fact, the only way would be to go through each and every image, and keep 
+track of how they are all written. 
 
-First create a virtual environment with conda or venv inside a temp folder, then activate it.
+The t-SNE algorithm solves this problem by reducing the number of dimensions 
+of your datasets, so that you can visualize it in low-dimensional space, 
+i.e. in 2D or 3D. For each data point, you will be able to observe its position on 
+your 3D plot, which can be compared with other data points to understand how 
+close or far apart they are from each other.  
 
-```
-virtualenv dash-tsne-venv
-
-# Windows
-dash-tsne-venv\Scripts\activate
-# Or Linux
-source venv/bin/activate
-```
-
-Clone the git repo, then install the requirements with pip
-```
-git clone https://github.com/plotly/dash-tsne.git
-cd dash-tsne
-pip install -r requirements.txt
-```
-
-Run the app
-```
-python app.py
-```
-
-### How to use the local version
-To train your own t-SNE algorithm, input a high-dimensional dataset with only numerical values, and the corresponding labels inside the upload fields. For convenience, small sample datasets are included inside the data directory. [You can also download them here](https://www.dropbox.com/sh/l79mcmlqil7w7so/AACfQhp7lUS90sZUedsqAzWOa?dl=0&lst=). The training can take a lot of time depending on the size of the dataset (the complete MNIST dataset could take 15-30 min), and it is not advised to refresh the webpage when you are doing so.
-
-### Generating data
-`generate_data.py` is included to download, flatten and normalize datasets, so that they can be directly used in this app. It uses keras.datasets, which means that you need install keras. To use the script, simply go to the path containing it and run in terminal:
-
-```python generate_data.py [dataset_name] [sample_size]```
-
-which will create the csv file with the corresponding parameters. At the moment, we have the following datasets:
-* MNIST
-* CIFAR10
-* Fashion_MNIST
+### Choosing the right parameters
+The quality of a t-SNE visualization depends heavily on the input parameters when you train the algorithm. Each parameter has a great impact on how well each group of data will be clustered. Here is what you should know for each of them:
+- **Number of Iterations:** This is how many steps you want to run the algorithm. A higher number of iterations often gives better visualizations, but more time to train.
+- **Perplexity:** This is a value that influences the number of neighbors that are taken into account during the training. According to the [original paper](https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf), the value should be between 5 and 50.
+- **Learning Rate:** This value determines how much weight we should give to the updates given by the algorithm at each step. It is typically between 10 and 1000.
+- **Initial PCA Dimensions:** Because the number of dimensions of the original data might be very big, we use another [dimensionality reduction technique called PCA](https://en.wikipedia.org/wiki/Principal_component_analysis) to first reduce the dataset to a smaller space, and then apply t-SNE on that space. Initial PCA dimensions of 50 has shown good experimental results in the original paper.
 
 
-## About the app
-### What is t-SNE?
-t-distributed stochastic neighbor embedding, created by van der Maaten and Hinton in 2008, is a visualization algorithm that reduce a high-dimensional space (e.g. an image or a word embedding) into two or three dimensions, facilitating visualization of the data distribution. 
-
-A classical example is MNIST, a dataset of 60,000 handwritten digits, 28x28 grayscale. Upon reducing the set of images using t-SNE, you can see all the digit clustered together, with few outliers caused by poor calligraphy. [You can read a detailed explanation of the algorithm on van der Maaten's personal blog.](https://lvdmaaten.github.io/tsne/)
 
 
-## Built With
-* [Dash](https://dash.plot.ly/) - Main server and interactive components
-* [Plotly Python](https://plot.ly/python/) - Used to create the interactive plots
-* [Scikit-Learn](http://scikit-learn.org/stable/documentation.html) - Run the t-SNE algorithm
 
-## Contributing
+### Participants
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+- **Wonyoung Seo**
+- **Jiyoon Cha**
+- **Pyeongwon Seo**
+- **Jinwoo Oh**
 
-## Authors
-
-* **Xing Han Lu** - *Initial Work* - [@xhlulu](https://github.com/xhlulu)
-
-See also the list of [contributors](https://github.com/plotly/dash-svm/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-## Screenshots
-The following are screenshots for the demo app:
-![animated2](screenshots/animated2.gif)
-
-![screenshot](screenshots/screenshot1.png)
-
-![screenshot2](screenshots/screenshot2.png)
-
-The following are screenshots for the full (local) app:
-![screenshot3](screenshots/default_view.png)
-
-![screenshot4](screenshots/fashion_mnist_example.png)
+For more information visit our [Notion](https://www.notion.so/Documentation-6fd5abe0e947489a9be98ede3678fb68) page!

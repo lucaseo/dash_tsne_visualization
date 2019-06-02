@@ -41,14 +41,4 @@ The quality of a t-SNE visualization depends heavily on the input parameters whe
 - **Initial PCA Dimensions:** Because the number of dimensions of the original data might be very big, we use another [dimensionality reduction technique called PCA](https://en.wikipedia.org/wiki/Principal_component_analysis) to first reduce the dataset to a smaller space, and then apply t-SNE on that space. Initial PCA dimensions of 50 has shown good experimental results in the original paper.
 
 
-
-
-
-### Participants
-
-- **Wonyoung Seo**
-- **Jiyoon Cha**
-- **Pyeongwon Seo**
-- **Jinwoo Oh**
-
 For more information visit our [Notion](https://www.notion.so/Documentation-6fd5abe0e947489a9be98ede3678fb68) page!
